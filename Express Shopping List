@@ -1,0 +1,45 @@
+const shoppingList = [
+    { name: 'Apple', price: 1.99 },
+    { name: 'Milk', price: 2.49 },
+    { name: 'Bread', price: 1.49 }
+];
+
+global.items = []
+
+module.exports = items
+
+// Route to render a list of shopping items
+app.get('/items', (req, res) => {
+    // Code to fetch and render shopping items goes here
+});
+
+app.post('/items', (req, res) => {
+  const newItem = req.body;
+  shoppingList.push(newItem);
+  res.status(201).json(newItem);
+});
+
+app.get('/items/:name', (req, res) => {
+    const itemName = req.params.name;
+    // Fetch item details from the database
+    const item = getItemDetails(itemName);
+    res.json({ name: item.name, price: item.price });
+});
+
+PATCH('/items/:name', (req, res) => {
+  // Modify item's name and/or price logic here
+});
+
+app.delete('/items/:name', (req, res) => {
+  const itemName = req.params.name;
+  
+  // Find index of item to delete
+  const index = items.findIndex(item => item.name === itemName);
+  
+  if (index !== -1) {
+    items.splice(index, 1);
+    res.status(200).send(`Item '${itemName}' deleted successfully.`);
+  } else {
+    res.status(404).send(`Item '${itemName}' not found.`);
+  }
+});
